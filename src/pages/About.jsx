@@ -1,10 +1,49 @@
 import { Heart, Award, Clock, Users, Play } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import processVideo from '../assets/videos/IMG_0152.mp4';
 import yindaPhoto from '../assets/images/IMG_6549.jpg';
 
 const About = () => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef(null);
+  const videoContainerRef = useRef(null);
+
+  // Auto-play video when it comes into view
+  useEffect(() => {
+    const videoElement = videoRef.current;
+    const containerElement = videoContainerRef.current;
+
+    if (!videoElement || !containerElement) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Video is in view, start playing
+            videoElement.play().then(() => {
+              setIsPlaying(true);
+            }).catch((error) => {
+              // Autoplay was prevented, user will need to click
+              console.log('Autoplay prevented:', error);
+            });
+          } else {
+            // Video is out of view, pause it
+            videoElement.pause();
+            setIsPlaying(false);
+          }
+        });
+      },
+      {
+        threshold: 0.5, // Trigger when 50% of the video is visible
+      }
+    );
+
+    observer.observe(containerElement);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
   
   const stats = [
     { icon: Heart, label: 'Happy Customers', value: '100+' },
@@ -78,13 +117,15 @@ const About = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Video Player */}
-            <div className="relative">
+            <div className="relative" ref={videoContainerRef}>
               <div className="aspect-[4/3] lg:aspect-[3/4] rounded-2xl overflow-hidden shadow-xl bg-stone-900 relative">
                 {/* Video Element */}
                 <video
-                  id="process-video"
+                  ref={videoRef}
                   className="absolute inset-0 w-full h-full object-cover z-10"
                   playsInline
+                  muted
+                  loop
                   onEnded={() => setIsPlaying(false)}
                   onClick={(e) => {
                     if (e.target.paused) {
@@ -101,7 +142,7 @@ const About = () => {
                 {/* Play Button Overlay */}
                 <button
                   onClick={() => {
-                    const video = document.getElementById('process-video');
+                    const video = videoRef.current;
                     if (video.paused) {
                       video.play();
                       setIsPlaying(true);
