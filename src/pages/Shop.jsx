@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MessageCircle, Filter } from 'lucide-react';
+import { MessageCircle, Filter, ChevronLeft, ChevronRight } from 'lucide-react';
 
 // Import all product images
-import productImg1 from '../assets/images/IMG_0021.jpg';
-import productImg2 from '../assets/images/IMG_0030.jpg';
+import productImg1 from '../assets/images/e8cff9b4-4d4e-4a52-9730-aee4411e6c41.jpeg';
+import productImg2 from '../assets/images/789C5FAA-6509-4F93-8D0B-E0C23414F525.jpeg';
 import productImg3 from '../assets/images/IMG_0089.jpg';
 import productImg4 from '../assets/images/IMG_0096.jpg';
 import productImg5 from '../assets/images/IMG_6539.jpg';
@@ -19,29 +19,47 @@ import productImg13 from '../assets/images/fcc0161a-5c0c-48f0-8881-35b996470bb5_
 import productImg14 from '../assets/images/IMG_6549.jpg';
 import productImg15 from '../assets/images/D15113F5-5AE4-4AD9-BF60-61FBAE78B074.PNG';
 
+// Additional images for Unisex Hexagon Shirt
+import hexImg1 from '../assets/images/49faf72a-6547-4159-a9cc-dc5a05e044b1.jpeg';
+import hexImg2 from '../assets/images/6d69a374-daa1-4ae4-9b48-6dea868344e2.jpeg';
+import hexImg3 from '../assets/images/8d0cd2cd-4743-44dc-914f-c6d7ed241323.jpeg';
+import hexImg5 from '../assets/images/c887d9c3-bd0a-4f16-8607-834255d886bb.jpeg';
+import hexImg6 from '../assets/images/f256768b-a85e-40f8-9dac-28272ce0e7fe (1).jpeg';
+import hexImg7 from '../assets/images/f256768b-a85e-40f8-9dac-28272ce0e7fe.jpeg';
+
+// Additional images for Full Granny Square Shirt
+import grannyImg1 from '../assets/images/789C5FAA-6509-4F93-8D0B-E0C23414F525.jpeg';
+import grannyImg2 from '../assets/images/92E4B18A-B753-4875-B8F4-C8E79755E967.jpeg';
+
 const Shop = () => {
   const [activeCategory, setActiveCategory] = useState('All');
+  const [slideIndices, setSlideIndices] = useState({});
+
+  const getSlideIndex = (productId) => slideIndices[productId] || 0;
+
+  const changeSlide = (e, productId, direction, totalImages) => {
+    e.stopPropagation();
+    setSlideIndices((prev) => {
+      const current = prev[productId] || 0;
+      const next = direction === 'next'
+        ? (current + 1) % totalImages
+        : (current - 1 + totalImages) % totalImages;
+      return { ...prev, [productId]: next };
+    });
+  };
 
   // Products with real images and proper categories
   const products = [
-    { id: 1, name: 'Crochet Tote Bag', price: '₦15,000', category: 'Bags', image: productImg1 },
-    { id: 2, name: 'Crochet Bucket Hat', price: '₦8,000', category: 'Accessories', image: productImg2 },
-    { id: 3, name: 'Crochet Top', price: '₦12,000', category: 'Tops', image: productImg3 },
-    { id: 4, name: 'Summer Crop Top', price: '₦10,000', category: 'Tops', image: productImg4 },
-    { id: 5, name: 'Crochet Sleeveless Top', price: '₦11,000', category: 'Tops', image: productImg5 },
-    { id: 6, name: 'Crochet Mini Dress', price: '₦18,000', category: 'Dresses', image: productImg6 },
-    { id: 7, name: 'Crochet Cardigan', price: '₦20,000', category: 'Tops', image: productImg7 },
-    { id: 8, name: 'Crochet Beach Top', price: '₦14,000', category: 'Tops', image: productImg8 },
-    { id: 9, name: 'Crochet Halter Top', price: '₦9,000', category: 'Tops', image: productImg9 },
-    { id: 10, name: 'Crochet Tank Top', price: '₦8,500', category: 'Tops', image: productImg10 },
-    { id: 11, name: 'Crochet Market Bag', price: '₦11,000', category: 'Bags', image: productImg11 },
-    { id: 12, name: 'Crochet Set', price: '₦22,000', category: 'Sets', image: productImg12 },
-    { id: 13, name: 'Crochet Two-Piece', price: '₦25,000', category: 'Sets', image: productImg13 },
-    { id: 14, name: 'Crochet Vest', price: '₦16,000', category: 'Tops', image: productImg14 },
-    { id: 15, name: 'Crochet Tank Vest', price: '₦12,000', category: 'Tops', image: productImg15 },
+    { id: 1, name: 'Unisex Hexagon Shirt', price: '₦70,000 - ₦120,000', category: 'Tops', images: [productImg1, hexImg1, hexImg2, hexImg3, hexImg5, hexImg6, hexImg7] },
+    { id: 2, name: 'Full Granny Square Shirt', price: '₦120,000 - ₦170,000', category: 'Tops', images: [grannyImg1, grannyImg2, productImg4] },
+    { id: 3, name: 'Crochet Shirt', price: '₦80,000 - ₦120,000', category: 'Tops', images: [productImg7, productImg6, productImg10, productImg11] },
+    { id: 13, name: 'Crochet Two-Piece', price: '₦85,000 - ₦120,000', category: 'Sets', images: [ productImg13, productImg8, productImg9] },
+    { id: 14, name: 'Children crochet wears', price: '₦25,000 - ₦40,000', category: 'Children', images: [productImg14, productImg5] },
+    { id: 15, name: 'Crochet Tank Top', price: '₦40,000 - ₦70,000', category: 'Tops', images: [productImg15] },
   ];
 
-  const categories = ['All', 'Tops', 'Dresses', 'Sets', 'Bags', 'Accessories'];
+
+  const categories = ['All', 'Tops', 'Dresses', 'Sets', 'Bags', 'Accessories', 'Children'];
 
   // Filter products based on active category
   const filteredProducts = activeCategory === 'All' 
@@ -94,18 +112,60 @@ const Shop = () => {
                 key={product.id}
                 className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100"
               >
-                {/* Product Image */}
+                {/* Product Image Slideshow */}
                 <div className="aspect-[3/4] relative overflow-hidden">
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500"
-                  />
+                  {product.images.map((img, imgIndex) => (
+                    <img
+                      key={imgIndex}
+                      src={img}
+                      alt={`${product.name} - view ${imgIndex + 1}`}
+                      className={`absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-500 ${
+                        imgIndex === getSlideIndex(product.id) ? 'opacity-100' : 'opacity-0'
+                      }`}
+                    />
+                  ))}
+
+                  {/* Slideshow Controls (only if multiple images) */}
+                  {product.images.length > 1 && (
+                    <>
+                      <button
+                        onClick={(e) => changeSlide(e, product.id, 'prev', product.images.length)}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/80 rounded-full shadow flex items-center justify-center hover:bg-white transition-colors z-10"
+                        aria-label="Previous image"
+                      >
+                        <ChevronLeft className="w-4 h-4 text-gray-800" />
+                      </button>
+                      <button
+                        onClick={(e) => changeSlide(e, product.id, 'next', product.images.length)}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/80 rounded-full shadow flex items-center justify-center hover:bg-white transition-colors z-10"
+                        aria-label="Next image"
+                      >
+                        <ChevronRight className="w-4 h-4 text-gray-800" />
+                      </button>
+                      {/* Dot indicators */}
+                      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+                        {product.images.map((_, dotIndex) => (
+                          <button
+                            key={dotIndex}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSlideIndices((prev) => ({ ...prev, [product.id]: dotIndex }));
+                            }}
+                            className={`w-2 h-2 rounded-full transition-colors ${
+                              dotIndex === getSlideIndex(product.id) ? 'bg-white' : 'bg-white/50'
+                            }`}
+                            aria-label={`View image ${dotIndex + 1}`}
+                          />
+                        ))}
+                      </div>
+                    </>
+                  )}
+
                   {/* Hover Overlay */}
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
                     <Link
                       to="/contact"
-                      className="flex items-center gap-2 px-6 py-3 bg-white text-gray-900 font-medium rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300"
+                      className="flex items-center gap-2 px-6 py-3 bg-white text-gray-900 font-medium rounded-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 pointer-events-auto"
                     >
                       <MessageCircle className="w-4 h-4" />
                       Order via WhatsApp

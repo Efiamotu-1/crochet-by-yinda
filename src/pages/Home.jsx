@@ -17,6 +17,16 @@ import galleryImg11 from '../assets/images/b8d84303-2a9f-4cf7-8158-019ed3fafaa0.
 import galleryImg12 from '../assets/images/fcc0161a-5c0c-48f0-8881-35b996470bb5.JPG';
 import galleryImg13 from '../assets/images/fcc0161a-5c0c-48f0-8881-35b996470bb5_1.JPG';
 import galleryImg14 from '../assets/images/D15113F5-5AE4-4AD9-BF60-61FBAE78B074.PNG';
+import galleryImg15 from '../assets/images/49faf72a-6547-4159-a9cc-dc5a05e044b1.jpeg';
+import galleryImg16 from '../assets/images/6d69a374-daa1-4ae4-9b48-6dea868344e2.jpeg';
+import galleryImg17 from '../assets/images/789C5FAA-6509-4F93-8D0B-E0C23414F525.jpeg';
+import galleryImg18 from '../assets/images/8d0cd2cd-4743-44dc-914f-c6d7ed241323.jpeg';
+import galleryImg19 from '../assets/images/92E4B18A-B753-4875-B8F4-C8E79755E967.jpeg';
+import galleryImg20 from '../assets/images/IMG_0096.jpg';
+import galleryImg21 from '../assets/images/c887d9c3-bd0a-4f16-8607-834255d886bb.jpeg';
+import galleryImg22 from '../assets/images/e8cff9b4-4d4e-4a52-9730-aee4411e6c41.jpeg';
+import galleryImg23 from '../assets/images/f256768b-a85e-40f8-9dac-28272ce0e7fe (1).jpeg';
+import galleryImg24 from '../assets/images/f256768b-a85e-40f8-9dac-28272ce0e7fe.jpeg';
 
 // Import hero video
 import heroVideo from '../assets/videos/IMG_2329.mp4';
@@ -25,9 +35,10 @@ const Home = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   
   const galleryImages = [
-    galleryImg1, galleryImg2, galleryImg3, galleryImg4, galleryImg5, galleryImg6,
-    galleryImg7, galleryImg8, galleryImg9, galleryImg10, galleryImg11, galleryImg12, 
-    galleryImg13, galleryImg14
+    galleryImg24, galleryImg23, galleryImg22, galleryImg21, galleryImg20, galleryImg19,
+    galleryImg18, galleryImg17, galleryImg16, galleryImg15, galleryImg14, galleryImg13,
+    galleryImg12, galleryImg11, galleryImg10, galleryImg9, galleryImg8, galleryImg7,
+    galleryImg6, galleryImg5, galleryImg4, galleryImg3, galleryImg2, galleryImg1
   ];
 
   const nextSlide = () => {
